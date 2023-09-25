@@ -1,4 +1,3 @@
-use std::env;
 use std::error::Error;
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
@@ -6,17 +5,17 @@ use std::{thread, time};
 
 fn main() -> Result<(), Box<dyn Error>>
 {
-    let mut collected_voltage: Vec<String> = Vec::new();
-    let mut collected_current: Vec<String> = Vec::new();
+    //let mut collected_voltage: Vec<String> = Vec::new();
+    //let mut collected_current: Vec<String> = Vec::new();
 
     let mut file_voltage = File::open("/sys/class/power_supply/BAT1/voltage_now")?;
     let mut file_current = File::open("/sys/class/power_supply/BAT1/current_now")?;
 
-    let mut voltage = String::new();
-    let mut current = String::new();
+    let mut voltage: String;
+    let mut current: String;
 
-    collected_voltage.reserve(600);
-    collected_current.reserve(600);
+    //collected_voltage.reserve(600);
+    //collected_current.reserve(600);
     let dataset_size = 600;
 
     for count in 0..dataset_size
@@ -36,8 +35,8 @@ fn main() -> Result<(), Box<dyn Error>>
         thread::sleep(time::Duration::from_secs(3));
     }
 
-    //println!("data collected!");
-/* 
+    // This code piece may be useful later for zero overhead from outputting data
+    /* 
     for count in 0..dataset_size
     {
         let voltage_f64 = collected_voltage[count].trim().parse::<f64>()? / 1_000_000.0;
